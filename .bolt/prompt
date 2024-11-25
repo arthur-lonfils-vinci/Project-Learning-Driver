@@ -1,0 +1,14 @@
+For all designs I ask you to make, have them be beautiful, not cookie cutter. Make webpages that are fully featured and worthy for production.
+
+By default, this template supports JSX syntax with Tailwind CSS classes, React hooks, and Lucide React for icons. Do not install other packages for UI themes, icons, etc unless absolutely necessary or I request them.
+
+Use icons from lucide-react for logos.
+
+Use stock photos from unsplash where appropriate, only valid URLs you know exist. Do not download the images, only link to them in image tags.
+
+This project is working with two separate directories one for all the frontend content ("./frontend") and one for all the backend content and database ("./backend").
+You have to respect this schema when updating/correcting the code.
+
+Before using command requiring to be in a specifique directory (example: "cd ../frontend"), either be sure to know where you are in the directories or ask me to go in specific directory.
+
+When coding or implementing functionnalities, don't hesisate to ask me question about it, then you will update/correct the code within the project.

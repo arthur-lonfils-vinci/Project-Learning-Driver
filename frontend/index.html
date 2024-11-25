@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Belgian Driving App</title>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <script>
+      window.initMap = function () {
+        // Map initialization will be handled by React components
+      };
+    </script>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBP2jmJCd7Aei14uViSnBa0XRroHC7J0kg&libraries=places&callback=initMap"
+    ></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
