@@ -2,7 +2,7 @@ import initSqlJs from 'sql.js';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-import { config } from '../config/index.js';
+import { config } from '../config/index';
 import { roadRulesData } from '../data/roadRules';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

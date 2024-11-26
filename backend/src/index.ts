@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { initializeDatabase } from './db/index';
+import { initializeDatabase } from './db/index.js';
 import { setupRoutes } from './routes/index.js';
 import { errorHandler } from './middleware/error.js';
 import dotenv from 'dotenv';
@@ -16,7 +16,7 @@ const app = express();
 const corsOptions = {
   origin:
     process.env.NODE_ENV === 'production'
-      ? ['https://arthur-server.com'] // Update with your production domain
+      ? ['https://app.arthur-server.com'] // Update with your production domain
       : ['http://localhost:5173'], // Vite's default development port
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -59,7 +59,7 @@ initializeDatabase()
       }
     });
 
-    const PORT = process.env.PORT || 3001;
+    const PORT = process.env.PORT || 3010;
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT} 🚀`);
