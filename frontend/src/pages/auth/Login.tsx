@@ -19,7 +19,7 @@ export default function Login() {
     setError('');
 
     try {
-      const response = await api.post('/auth/login', formData);
+      const response = await api.post('api/auth/login', formData);
       console.log("Response data => "+response.data.token);
       dispatch(setCredentials(response.data));
       navigate('/');

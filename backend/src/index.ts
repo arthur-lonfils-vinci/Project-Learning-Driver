@@ -15,7 +15,7 @@ const app = express();
 // CORS configuration
 const corsOptions = {
   origin:
-    process.env.NODE_ENV === 'development'
+    process.env.NODE_ENV === 'production'
       ? ['https://arthur-server.com'] // Update with your production domain
       : ['http://localhost:5173'], // Vite's default development port
   credentials: true,
