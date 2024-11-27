@@ -20,7 +20,7 @@ export async function createUser(userData: UserCreate) {
     hashedPassword,
     userData.name,
     userData.role,
-    userData.role === 'STUDENT' ? userData.profileType : null,
+    userData.role === 'STUDENT' ? userData.profileType ?? null : null,
     socialId
   ]);
 
