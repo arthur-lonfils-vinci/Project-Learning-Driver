@@ -5,6 +5,11 @@ import { fetchStudents } from '@/store/slices/instructorSlice';
 import type { RootState } from '@/store';
 
 export default function InstructorDashboard() {
+  const token = localStorage.getItem('token');
+  if (token === null) {
+    console.log('Unauthorized => Redirecting to login :', token);
+  }
+
   const dispatch = useAppDispatch();
   const { students, isLoading } = useAppSelector(
     (state: RootState) => state.instructor

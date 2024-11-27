@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-//import { useSelector, useDispatch } from "react-redux";
 import { Car, Book, Trophy, UserCircle, LogOut } from "lucide-react";
 import { logout } from "@/store/slices/authSlice";
 import { useAppDispatch, useAppSelector, type RootState } from "@/store";
@@ -8,6 +7,8 @@ export default function Navbar() {
   const dispatch = useAppDispatch();
   const { user, isAuthenticated } = useAppSelector((state: RootState) => state.auth);
   console.log("User => "+user?.name);
+  const token = localStorage.getItem("token");
+  console.log("Token => "+token);
 
   const handleLogout = () => {
     dispatch(logout());
