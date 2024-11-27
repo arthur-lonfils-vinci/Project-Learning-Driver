@@ -36,7 +36,9 @@ export async function getCategories(req: Request, res: Response) {
       }
 
       const category = categoriesMap.get(id);
-      category.translations[language] = { name, description };
+      if (typeof language === 'string') {
+        category.translations[language] = { name, description };
+      }
     }
 
     res.json(Array.from(categoriesMap.values()));
@@ -96,7 +98,9 @@ export async function getRulesByCategory(req: Request, res: Response) {
       }
 
       const rule = rulesMap.get(id);
-      rule.translations[language] = { title, content };
+      if (typeof language === 'string') {
+        rule.translations[language] = { title, content };
+      }
     }
 
     res.json(Array.from(rulesMap.values()));
@@ -150,11 +154,13 @@ export async function getQuizQuestions(req: Request, res: Response) {
       }
 
       const questionObj = questionsMap.get(id);
-      questionObj.translations[language] = {
-        question,
-        options: options,
-        explanation,
-      };
+      if (typeof language === 'string') {
+        questionObj.translations[language] = {
+          question,
+          options: options,
+          explanation,
+        };
+      }
     }
 
     res.json(Array.from(questionsMap.values()));

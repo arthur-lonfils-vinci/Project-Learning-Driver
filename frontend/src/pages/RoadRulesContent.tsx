@@ -128,7 +128,7 @@ export default function RoadRulesContent() {
                       className="w-full flex justify-between items-center"
                     >
                       <h3 className="text-lg font-medium text-belgian-black">
-                        {rule.translations[i18n.language]?.title ||
+                        {rule.translations[i18n.language as Language]?.title ||
                           rule.translations['en'].title}
                       </h3>
                       {expandRules.has(rule.id) ? (
@@ -140,7 +140,7 @@ export default function RoadRulesContent() {
                     {expandRules.has(rule.id) && (
                       <div className="mt-4 prose max-w-none">
                         <p className="text-gray-600 whitespace-pre-line">
-                          {rule.translations[i18n.language]?.content ||
+                          {rule.translations[i18n.language as Language]?.content ||
                             rule.translations['en'].content}
                         </p>
                         {rule.mediaUrl && (
@@ -150,7 +150,7 @@ export default function RoadRulesContent() {
                                 className="w-full aspect-video rounded-lg"
                                 src={rule.mediaUrl}
                                 title={
-                                  rule.translations[i18n.language]?.title ||
+                                  rule.translations[i18n.language as Language]?.title ||
                                   rule.translations['en'].title
                                 }
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -160,7 +160,7 @@ export default function RoadRulesContent() {
                               <img
                                 src={rule.mediaUrl}
                                 alt={
-                                  rule.translations[i18n.language]?.title ||
+                                  rule.translations[i18n.language as Language]?.title ||
                                   rule.translations['en'].title
                                 }
                                 className="w-full rounded-lg"
