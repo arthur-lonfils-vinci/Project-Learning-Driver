@@ -16,7 +16,7 @@ EXPOSE 3010
 
 # Verify the file exists
 RUN ls -R dist
-RUN cat dist/db/index.js
-RUN cat dist/config/index.js
+# RUN cat dist/db/index.js
+# RUN cat dist/config/index.js
 
 CMD ["node", "dist/index.js"]
