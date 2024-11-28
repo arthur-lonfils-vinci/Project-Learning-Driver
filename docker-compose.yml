@@ -28,8 +28,8 @@ services:
       - /backend/node_modules
       - ./backend/data:/backend/data
     environment:
-      - NODE_ENV=development
-      - JWT_SECRET=d64a03684f62aa62a166c3c736cf8ee34176106e009d2a41167787b27a08ecc663abee3ef11a39c747e5faef2ecad1a5f383128c8a20bbda8461fb5e102bde4f
+      - NODE_ENV=production
+      - JWT_SECRET=d64a03684f62aa62a166c3c736cf8ee34176106e009d2a41167787b27eizhhfbihzebcibricyzgiebzihvbirbzvirbvoeurnviebvibv
       - PORT=3010
     networks:
       - app-network

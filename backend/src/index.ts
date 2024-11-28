@@ -19,7 +19,7 @@ const corsOptions = {
       ? ['https://app.arthur-server.com']
       : [
           'http://192.168.0.33:5173',
-	  'http://localhost:5173',
+	        'http://localhost:5173',
           /https:\/\/.*\.webcontainer\.io$/,
           'https://stackblitz.com'
         ],
