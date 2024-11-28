@@ -14,7 +14,7 @@ services:
       - backend
     environment:
       - VITE_API_URL=http://backend:3010
-      - PORT: 3001
+      - PORT=3001
     networks:
       - app-network
 
