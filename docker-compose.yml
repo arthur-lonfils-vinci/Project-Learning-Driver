@@ -8,8 +8,7 @@ services:
     ports:
       - "5174:5173"
     volumes:
-      - ./frontend:/frontend
-      - /frontend/node_modules
+      - ./frontend:/frontend:rw
     depends_on:
       - backend
     environment:
@@ -25,9 +24,8 @@ services:
     ports:
       - "3001:3010"
     volumes:
-      - /backend/src:/backend/src
-      - /backend/node_modules
-      - /backend/data:/backend/data
+      - ./backend/src:/backend/src:rw
+      - ./backend/data:/backend/data:rw
     environment:
       - NODE_ENV=production
       - JWT_SECRET=d64a03684f62aa62a166c3c736cf8ee34176106e009d2a41167787b27eizhhfbihzebcibricyzgiebzihvbirbzvirbvoeurnviebvibv
