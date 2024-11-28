@@ -5,9 +5,6 @@ import { dirname } from 'path';
 import { initializeDatabase } from './db/index.js';
 import { setupRoutes } from './routes/index.js';
 import { errorHandler } from './middleware/error.js';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
