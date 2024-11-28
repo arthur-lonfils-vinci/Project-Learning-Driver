@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { RoadRuleCategory } from '../types/roadRules';
+import { RoadRuleCategory } from '../types/roadRules.js';
 
 const categoryId1 = uuidv4();
 const ruleId1 = uuidv4();

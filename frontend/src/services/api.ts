@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3010/',
+  baseURL: 'http://192.168.0.33:3010/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -11,7 +11,6 @@ const api = axios.create({
 // Add auth token to requests if available
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
-  console.log('Token:', token); // Debug
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -23,9 +22,8 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      console.log('Unauthorized');
       localStorage.removeItem('token');
-      //window.location.href = '/login';
+      window.location.href = '/login';
     }
     return Promise.reject(error);
   }

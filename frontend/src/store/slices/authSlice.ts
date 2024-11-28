@@ -3,7 +3,21 @@ import type { AuthState, User } from '../../types/auth';
 
 const getInitialToken = (): string | null => {
   if (typeof window === 'undefined') return null;
-  return localStorage.getItem('token');
+  const token = localStorage.getItem('token');
+  if (!token) return null;
+  
+  try {
+    // Check if token is expired
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    if (payload.exp * 1000 < Date.now()) {
+      localStorage.removeItem('token');
+      return null;
+    }
+    return token;
+  } catch (e) {
+    localStorage.removeItem('token');
+    return null;
+  }
 };
 
 const initialState: AuthState = {
@@ -27,12 +41,14 @@ const authSlice = createSlice({
       state.token = token;
       state.isAuthenticated = true;
       state.error = null;
+      localStorage.setItem('token', token);
     },
     logout: (state) => {
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
       state.error = null;
+      localStorage.removeItem('token');
     },
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;

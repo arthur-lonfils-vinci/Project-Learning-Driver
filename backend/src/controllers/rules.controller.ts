@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getDb } from '../db/index';
+import { getDb } from '../db/index.js';
 import { string } from 'zod';
 
 export async function getCategories(req: Request, res: Response) {

@@ -3,9 +3,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { randomUUID } from 'crypto';
-import { getDb } from '../db/index';
-import { generateSocialId } from '../utils/socialId';
-import { config } from '../config';
+import { getDb } from '../db/index.js';
+import { generateSocialId } from '../utils/socialId.js';
+import { config } from '../config/index.js';
 
 // Validation schemas
 const registerSchema = z

@@ -2,11 +2,14 @@ import initSqlJs from 'sql.js';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-import { config } from '../config/index';
-import { roadRulesData } from '../data/roadRules';
+import { config } from '../config/index.js';
+import { roadRulesData } from '../data/roadRules.js';
+import crypto from 'crypto';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DB_PATH = join(__dirname, '..', '..', 'data', 'app.db');
+//const __dirname = dirname(fileURLToPath(import.meta.url));
+//const DB_PATH = join(__dirname, '..', '..', 'data', 'app.db');
+
+const DB_PATH = './backend/data/app.db';
 
 let db: initSqlJs.Database | null = null;
 
@@ -20,13 +23,13 @@ export async function initializeDatabase() {
 
   try {
     const SQL = await initSqlJs();
-    
+
     // Ensure data directory exists
     const dataDir = dirname(DB_PATH);
     if (!fs.existsSync(dataDir)) {
       fs.mkdirSync(dataDir, { recursive: true });
     }
-    
+
     // If database file exists, load it
     if (fs.existsSync(DB_PATH)) {
       console.log('Loading existing database...');
@@ -38,7 +41,7 @@ export async function initializeDatabase() {
       db = new SQL.Database();
       await createTables();
       await seedRoadRules();
-      
+
       // Save the initial database
       const data = Buffer.from(db.export());
       fs.writeFileSync(DB_PATH, data);
@@ -52,7 +55,9 @@ export async function initializeDatabase() {
       }
     }, config.database.saveInterval);
 
-    console.log('Database initialized successfully in initializeDatabase() from index.ts');
+    console.log(
+      'Database initialized successfully in initializeDatabase() from index.ts'
+    );
     return db;
   } catch (error) {
     console.error('Database initialization error:', error);
@@ -64,7 +69,7 @@ export async function getDb() {
   if (!db) {
     await initializeDatabase();
     if (!db) throw new Error('Database not initialized at getDb()');
-  } 
+  }
   return db;
 }
 
@@ -248,7 +253,7 @@ async function createTables() {
       FOREIGN KEY (userId) REFERENCES users(id)
     )`,
 
-    `CREATE INDEX IF NOT EXISTS idx_achievements_user ON achievements(userId)`
+    `CREATE INDEX IF NOT EXISTS idx_achievements_user ON achievements(userId)`,
   ];
 
   db.exec('BEGIN TRANSACTION');
