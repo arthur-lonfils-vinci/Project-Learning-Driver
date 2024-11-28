@@ -1,9 +1,9 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { getDb } from '../db/index';
-import { generateSocialId } from '../utils/socialId';
-import { config } from '../config';
-import type { UserCreate } from '../models/User';
+import { getDb } from '../db/index.js';
+import { generateSocialId } from '../utils/socialId.js';
+import { config } from '../config/index.js';
+import type { UserCreate } from '../models/User.js';
 
 export async function createUser(userData: UserCreate) {
   const db = await getDb();
@@ -20,7 +20,7 @@ export async function createUser(userData: UserCreate) {
     hashedPassword,
     userData.name,
     userData.role,
-    userData.role === 'STUDENT' ? userData.profileType : null,
+    userData.role === 'STUDENT' ? userData.profileType ?? null : null,
     socialId
   ]);
 

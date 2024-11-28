@@ -1,4 +1,4 @@
-import type { Language } from './i18n.ts';
+import type { Language } from './i18n.js';
 
 export interface RoadRuleCategory {
   id: string;

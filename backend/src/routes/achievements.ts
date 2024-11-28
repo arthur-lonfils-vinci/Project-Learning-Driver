@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { randomUUID } from 'crypto';
-import { getDb } from '../db/index';
+import { getDb } from '../db/index.js';
 import { authenticateToken } from '../middleware/auth.js';
 
 const router = Router();

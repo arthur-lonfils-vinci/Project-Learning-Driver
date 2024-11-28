@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Response, NextFunction, Request } from 'express';
 import { z } from 'zod';
 import { randomUUID } from 'crypto';
 import { getDb } from '../db/index.js';
@@ -7,7 +7,16 @@ import { authenticateToken } from '../middleware/auth.js';
 const router = Router();
 
 // Middleware to ensure user is an instructor
-const ensureInstructor = (req, res, next) => {
+interface User {
+  id: string;
+  role: string;
+}
+
+interface RequestWithUser extends Request {
+  user?: User;
+}
+
+const ensureInstructor = (req: Request, res: Response, next: NextFunction): Response | void => {
   if (req.user?.role !== 'INSTRUCTOR') {
     return res.status(403).json({ error: 'Access denied. Instructor role required.' });
   }
@@ -17,8 +26,13 @@ const ensureInstructor = (req, res, next) => {
 // Add student by social ID
 router.post('/students', authenticateToken, ensureInstructor, async (req, res) => {
   try {
+
+    if (!req.user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
     const { socialId } = req.body;
-    const db = getDb();
+    const db = await getDb();
 
     // Find student by social ID
     const studentResult = db.exec(`
@@ -42,7 +56,7 @@ router.post('/students', authenticateToken, ensureInstructor, async (req, res) =
     const relationshipResult = db.exec(`
       SELECT id FROM instructor_students 
       WHERE instructorId = ? AND studentId = ?
-    `, [req.user.id, student.id]);
+    `, [req.user?.id, student.id]);
 
     if (relationshipResult.length && relationshipResult[0].values.length) {
       return res.status(400).json({ error: 'Student already added' });
@@ -74,9 +88,14 @@ router.post('/students', authenticateToken, ensureInstructor, async (req, res) =
 });
 
 // Get instructor's students with their progress
-router.get('/students', authenticateToken, ensureInstructor, (req, res) => {
+router.get('/students', authenticateToken, ensureInstructor, async (req, res) => {
   try {
-    const db = getDb();
+
+    if (!req.user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const db = await getDb();
     
     // Get the basic student info including name and socialId
     const studentsResult = db.exec(`
@@ -131,9 +150,9 @@ router.get('/students', authenticateToken, ensureInstructor, (req, res) => {
 
       if (sessionsResult.length && sessionsResult[0].values.length) {
         const [completedSessions, averageRating, practiceHours] = sessionsResult[0].values[0];
-        student.progress.completedSessions = completedSessions || 0;
-        student.progress.averageRating = averageRating || 0;
-        student.progress.practiceHours = Math.round((practiceHours || 0) * 10) / 10;
+        student.progress.completedSessions = Number(completedSessions) || 0;
+        student.progress.averageRating = Number(averageRating) || 0;
+        student.progress.practiceHours = Math.round((Number(practiceHours) || 0) * 10) / 10;
       }
 
       // Get quiz progress
@@ -144,7 +163,7 @@ router.get('/students', authenticateToken, ensureInstructor, (req, res) => {
       `, [student.id]);
 
       if (quizResult.length && quizResult[0].values.length) {
-        student.progress.quizzesPassed = quizResult[0].values[0][0] || 0;
+        student.progress.quizzesPassed = Number(quizResult[0].values[0][0]) || 0;
       }
     }
 

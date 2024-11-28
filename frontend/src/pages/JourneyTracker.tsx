@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '@/store'; // Import typed hooks
 import { Car, MapPin, Clock, Cloud } from 'lucide-react';
 import { startSession, endSession } from '@/store/slices/journeySlice';
 import type { RootState } from '@/store';
 import type { Location } from '@/types/journey';
 
 export default function JourneyTracker() {
-  const dispatch = useDispatch();
-  const { activeSession, isLoading } = useSelector(
+  const dispatch = useAppDispatch();
+  const { activeSession, isLoading } = useAppSelector(
     (state: RootState) => state.journey
   );
   const [currentLocation, setCurrentLocation] = useState<Location | null>(null);

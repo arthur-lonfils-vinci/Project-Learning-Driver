@@ -132,7 +132,7 @@ export default function Register() {
                     role: e.target.value as 'STUDENT' | 'INSTRUCTOR',
                     profileType:
                       e.target.value === 'INSTRUCTOR'
-                        ? undefined
+                        ? ""
                         : formData.profileType,
                   })
                 }

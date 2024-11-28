@@ -4,10 +4,11 @@ import { useDispatch } from 'react-redux';
 import { LogIn } from 'lucide-react';
 import { setCredentials } from '@/store/slices/authSlice';
 import api from '@/services/api';
+import { useAppDispatch } from '@/store';
 
 export default function Login() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
     email: '',
     password: '',

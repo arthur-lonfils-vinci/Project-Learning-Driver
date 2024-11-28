@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getCategories, getRulesByCategory, getQuizQuestions } from '../controllers/rules.controller';
+import { getCategories, getRulesByCategory, getQuizQuestions } from '../controllers/rules.controller.js';
 
 const router = Router();
 

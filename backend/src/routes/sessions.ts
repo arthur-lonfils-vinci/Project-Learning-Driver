@@ -12,6 +12,10 @@ const locationSchema = z.object({
   lng: z.number(),
 });
 
+const endSessionSchema = z.object({
+  endLocation: locationSchema,
+});
+
 const startSessionSchema = z.object({
   startLocation: locationSchema,
   startTime: z.string(),
@@ -25,13 +29,13 @@ const speedEventSchema = z.object({
 });
 
 // Start a new session
-router.post('/', authenticateToken, (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
   try {
     const { startLocation, startTime, weather } = startSessionSchema.parse(
       req.body
     );
     const sessionId = randomUUID();
-    const db = getDb();
+    const db = await getDb();
     if (!req.user) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
@@ -86,11 +90,15 @@ router.post('/', authenticateToken, (req, res) => {
 });
 
 // End a session
-router.post('/:id/end', authenticateToken, (req, res) => {
+router.post('/:id/end', authenticateToken, async (req, res) => {
   try {
-    const { endLocation } = locationSchema.parse(req.body);
+    const { endLocation } = endSessionSchema.parse(req.body);
     const { id } = req.params;
-    const db = getDb();
+    const db = await getDb();
+
+    if (!req.user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
 
     db.exec(
       `
@@ -132,11 +140,11 @@ router.post('/:id/end', authenticateToken, (req, res) => {
 });
 
 // Record speed event
-router.post('/speed-event', authenticateToken, (req, res) => {
+router.post('/speed-event', authenticateToken, async (req, res) => {
   try {
     const { speed, speedLimit, location } = speedEventSchema.parse(req.body);
     const id = randomUUID();
-    const db = getDb();
+    const db = await getDb();
 
     db.exec(
       `
@@ -157,7 +165,7 @@ router.post('/speed-event', authenticateToken, (req, res) => {
       sessionId: result[0].values[0][1],
       speed: result[0].values[0][2],
       speedLimit: result[0].values[0][3],
-      location: JSON.parse(result[0].values[0][4]),
+      location: typeof result[0].values[0][4] === 'string' ? JSON.parse(result[0].values[0][4]) : null,
     };
 
     res.json(event);
@@ -168,12 +176,12 @@ router.post('/speed-event', authenticateToken, (req, res) => {
 });
 
 // Add session note
-router.post('/:id/notes', authenticateToken, (req, res) => {
+router.post('/:id/notes', authenticateToken, async (req, res) => {
   try {
     const { content } = req.body;
     const { id } = req.params;
     const noteId = randomUUID();
-    const db = getDb();
+    const db = await getDb();
 
     db.exec(
       `

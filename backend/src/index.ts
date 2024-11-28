@@ -16,8 +16,13 @@ const app = express();
 const corsOptions = {
   origin:
     process.env.NODE_ENV === 'production'
-      ? ['https://app.arthur-server.com'] // Update with your production domain
-      : ['http://localhost:5173'], // Vite's default development port
+      ? ['https://app.arthur-server.com']
+      : [
+          'http://192.168.0.33:5173',
+	  'http://localhost:5173',
+          /https:\/\/.*\.webcontainer\.io$/,
+          'https://stackblitz.com'
+        ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: [
@@ -35,7 +40,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Enable pre-flight requests for all routes
-app.options('*', cors(corsOptions));
+app.options('*', cors());
 
 app.use(express.json());
 

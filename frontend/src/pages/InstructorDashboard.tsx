@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { UserCircle, Users, Calendar, Target, Heading1 } from 'lucide-react';
+import { useAppDispatch, useAppSelector } from '@/store'; // Import typed hooks
+import { UserCircle, Users, Calendar, Target, Heading1, Clock } from 'lucide-react';
 import { fetchStudents } from '@/store/slices/instructorSlice';
 import type { RootState } from '@/store';
 
 export default function InstructorDashboard() {
-  const dispatch = useDispatch();
-  const { students, isLoading } = useSelector(
+  const dispatch = useAppDispatch();
+  const { students, isLoading } = useAppSelector(
     (state: RootState) => state.instructor
   );
   const [loadingTimeout, setLoadingTimeout] = useState(false);

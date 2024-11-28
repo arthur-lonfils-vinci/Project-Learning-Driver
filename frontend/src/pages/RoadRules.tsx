@@ -95,11 +95,11 @@ export default function RoadRules() {
                   <ChevronRight className="h-6 w-6 text-gray-400" />
                 </div>
                 <h3 className="text-xl font-semibold text-belgian-black mb-2">
-                  {category.translations[i18n.language]?.name ||
+                  {category.translations[i18n.language as Language]?.name ||
                     category.translations.en.name}
                 </h3>
                 <p className="text-gray-600">
-                  {category.translations[i18n.language]?.description ||
+                  {category.translations[i18n.language as Language]?.description ||
                     category.translations.en.description}
                 </p>
               </button>

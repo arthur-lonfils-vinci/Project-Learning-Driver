@@ -1,5 +1,7 @@
 import { Navigate } from 'react-router-dom';
-import { useAppSelector } from '@/store';
+import { useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '@/store';
+import { logout } from '@/store/slices/authSlice';
 
 interface PrivateRouteProps {
   children: React.ReactNode;
@@ -7,10 +9,18 @@ interface PrivateRouteProps {
 }
 
 export default function PrivateRoute({ children, roles }: PrivateRouteProps) {
+  const dispatch = useAppDispatch();
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
+  useEffect(() => {
+    // Double check token validity
+    const token = localStorage.getItem('token');
+    if (!token && isAuthenticated) {
+      dispatch(logout());
+    }
+  }, [dispatch, isAuthenticated]);
+
   if (!isAuthenticated) {
-    debugger;
     return <Navigate to="/login" />;
   }
 

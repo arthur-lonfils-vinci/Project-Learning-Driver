@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   frontend:
     build:
@@ -7,8 +9,14 @@ services:
       - "5173:5173"
     volumes:
       - ./frontend:/frontend
+      - /frontend/node_modules
     depends_on:
       - backend
+    environment:
+      - VITE_API_URL=http://backend:3010
+    networks:
+      - app-network
+
   backend:
     build:
       context: ./backend
@@ -16,4 +24,16 @@ services:
     ports:
       - "3010:3010"
     volumes:
-      - ./backend:/backend
+      - ./backend/src:/backend/src
+      - /backend/node_modules
+      - ./backend/data:/backend/data
+    environment:
+      - NODE_ENV=development
+      - JWT_SECRET=d64a03684f62aa62a166c3c736cf8ee34176106e009d2a41167787b27a08ecc663abee3ef11a39c747e5faef2ecad1a5f383128c8a20bbda8461fb5e102bde4f
+      - PORT=3010
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
