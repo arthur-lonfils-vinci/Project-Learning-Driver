@@ -9,7 +9,7 @@ import crypto from 'crypto';
 //const __dirname = dirname(fileURLToPath(import.meta.url));
 //const DB_PATH = join(__dirname, '..', '..', 'data', 'app.db');
 
-const DB_PATH = './backend/data/app.db';
+const DB_PATH = process.env.NODE_ENV == 'development' ? './data/app.db': './backend/data/app.db';
 
 let db: initSqlJs.Database | null = null;
 
