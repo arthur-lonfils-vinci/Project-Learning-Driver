@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 const PORT = process.env.PORT || 3010;
+const IP = process.env.IP || 'localhost';
 
 const api = axios.create({
-  baseURL: 'http://192.168.0.33:'+PORT,
+  baseURL: 'http://'+IP+':'+PORT,
   headers: {
     'Content-Type': 'application/json',
   },
